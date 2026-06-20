@@ -19,7 +19,7 @@ const SpringboardGrid = ({ role, setTab }) => {
   const tabs = getNavigationTabs(role, t).filter(tab => tab.id !== 'dashboard');
 
   return (
-    <div className="md:hidden grid grid-cols-2 gap-4 mb-8">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
       {tabs.map((tab) => {
         const Icon = tab.icon;
         return (

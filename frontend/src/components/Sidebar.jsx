@@ -65,7 +65,7 @@ const Sidebar = ({ role, currentTab, setCurrentTab }) => {
   return (
     <>
       {/* --- DESKTOP SIDEBAR (Hidden on mobile) --- */}
-      <aside className="hidden md:flex flex-col w-64 h-full border-r border-slate-800 glass-panel z-10 sticky top-0">
+      <aside className="hidden md:flex flex-col w-64 h-screen border-r border-slate-800 glass-panel z-10 sticky top-0">
         <div className="p-6 border-b border-slate-800 flex items-center space-x-3">
           <span className="text-3xl">🎓</span>
           <div>
