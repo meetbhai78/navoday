@@ -78,10 +78,12 @@ const Sidebar = ({ role, currentTab, setCurrentTab, isOpen, onClose }) => {
       {/* Sidebar */}
       <aside
         className={`
-          fixed top-0 left-0 z-50 h-full w-64 glass-panel border-r border-slate-800 flex flex-col
-          transform transition-transform duration-300 ease-in-out
-          ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-          md:translate-x-0 md:static md:z-auto
+          glass-panel flex flex-col z-50 transition-all duration-300 ease-in-out
+          ${isOpen 
+            ? 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90vw] sm:w-80 h-auto max-h-[85vh] rounded-3xl border border-slate-700 opacity-100 scale-100' 
+            : 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90vw] sm:w-80 h-auto max-h-[85vh] rounded-3xl border border-slate-700 opacity-0 scale-90 pointer-events-none'
+          }
+          md:static md:transform-none md:w-64 md:h-full md:max-h-full md:rounded-none md:border-t-0 md:border-b-0 md:border-l-0 md:border-r md:border-slate-800 md:opacity-100 md:scale-100 md:pointer-events-auto
         `}
       >
         {/* Brand + Close button for mobile */}
