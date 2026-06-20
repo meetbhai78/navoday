@@ -170,6 +170,29 @@ const TeacherDashboard = ({ tab, setTab }) => {
     }
   };
 
+  const downloadAttendanceCSV = () => {
+    if (studentsList.length === 0) return alert('No attendance data to download');
+    const headers = ['Roll Number', 'Student Name', 'Username/Phone', 'Status'];
+    const rows = studentsList.map(st => [
+      st.rollNumber || '-',
+      st.name,
+      st.username,
+      attendanceRecords[st.studentId] || 'Present'
+    ]);
+    
+    const csvContent = "data:text/csv;charset=utf-8," 
+      + headers.join(",") + "\n" 
+      + rows.map(e => e.join(",")).join("\n");
+      
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `attendance_${selectedDate}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   // ==================== EXAM ACTIONS ====================
 
   const handleAddQuestion = () => {
@@ -242,6 +265,29 @@ const TeacherDashboard = ({ tab, setTab }) => {
     } catch (err) {
       alert(err.response?.data?.message || err.message);
     }
+  };
+
+  const downloadMarksCSV = () => {
+    if (studentsList.length === 0 || !gradingExam) return alert('No marks data to download');
+    const headers = ['Student Name', 'Username/Phone', 'Marks Obtained', 'Out Of'];
+    const rows = studentsList.map(st => [
+      st.name,
+      st.username,
+      marksRecords[st.studentId] || '0',
+      gradingExam.totalMarks
+    ]);
+    
+    const csvContent = "data:text/csv;charset=utf-8," 
+      + headers.join(",") + "\n" 
+      + rows.map(e => e.join(",")).join("\n");
+      
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `marks_${gradingExam.title}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   // ==================== HOMEWORK / NOTES ACTIONS ====================
@@ -478,6 +524,16 @@ const TeacherDashboard = ({ tab, setTab }) => {
                 Load Students
               </button>
             </div>
+            
+            <div className="flex items-end">
+              <button
+                onClick={downloadAttendanceCSV}
+                className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-2 rounded-lg text-sm transition flex justify-center items-center space-x-2"
+                title="Download CSV"
+              >
+                <Download size={16} /> <span>Export CSV</span>
+              </button>
+            </div>
           </div>
 
           {loadingAttendance ? (
@@ -593,7 +649,12 @@ const TeacherDashboard = ({ tab, setTab }) => {
                   <h4 className="text-lg font-bold text-slate-200">Entering Marks: {gradingExam.title}</h4>
                   <p className="text-xs text-slate-400">Class: {gradingExam.classId?.name} | Total Marks: {gradingExam.totalMarks}</p>
                 </div>
-                <button onClick={() => setGradingExam(null)} className="text-xs text-slate-400 hover:text-slate-200">Back</button>
+                <div className="flex space-x-3">
+                  <button onClick={downloadMarksCSV} className="text-emerald-400 hover:text-emerald-300 flex items-center text-sm font-bold bg-emerald-950/30 px-3 py-1.5 rounded-lg">
+                    <Download size={15} className="mr-1.5" /> Export CSV
+                  </button>
+                  <button onClick={() => setGradingExam(null)} className="text-slate-400 hover:text-slate-200">Back</button>
+                </div>
               </div>
 
               <div className="overflow-x-auto">
@@ -980,8 +1041,8 @@ const TeacherDashboard = ({ tab, setTab }) => {
                   >
                     <option value="">Select Student</option>
                     {allStudents.map(st => (
-                      <option key={st.user._id} value={st.user._id}>
-                        {st.user.name} ({st.profile?.villageId?.name || 'No Village'})
+                      <option key={st._id} value={st._id}>
+                        {st.name} ({st.username})
                       </option>
                     ))}
                   </select>
