@@ -25,6 +25,7 @@ jobs:
       - name: Install Frontend Dependencies
         run: |
           cd frontend
+          rm -f package-lock.json
           npm install
 
       - name: Build Web App
