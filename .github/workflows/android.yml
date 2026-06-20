@@ -28,6 +28,8 @@ jobs:
           npm install
 
       - name: Build Web App
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL || 'https://navoday.onrender.com' }}
         run: |
           cd frontend
           npm run build
