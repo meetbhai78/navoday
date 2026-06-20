@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve static files from the React frontend build
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
+app.use(express.static(path.join(__dirname, 'frontend/dist')));
 
 // Static files (Uploads fallback)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -35,7 +35,7 @@ app.use('/api/dashboard', require('./routes/dashboardRoutes'));
 
 // Catch-all route to serve the React app's index.html (supports SPA routing)
 app.get('*', (req, res) => {
-  const indexPath = path.join(__dirname, '../frontend/dist/index.html');
+  const indexPath = path.join(__dirname, 'frontend/dist/index.html');
   if (require('fs').existsSync(indexPath)) {
     res.sendFile(indexPath);
   } else {

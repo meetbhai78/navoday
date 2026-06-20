@@ -1,9 +1,8 @@
 services:
-  # Consolidated Web Service (Backend + Frontend together)
   - type: web
     name: navoday
     env: node
-    buildCommand: npm run build
+    buildCommand: npm install && npm run build
     startCommand: npm start
     envVars:
       - key: PORT
