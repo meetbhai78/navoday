@@ -4,9 +4,10 @@ import { useLanguage } from '../context/LanguageContext';
 import axios from 'axios';
 import { 
   Download, Clock, CheckCircle, AlertCircle, FileText, 
-  ChevronRight, Award, Bell, Mail, RefreshCw, Send, Check
+  ChevronRight, Award, Bell, Mail, RefreshCw, Send, Check, ArrowLeft
 } from 'lucide-react';
 import Settings from './Settings';
+import SpringboardGrid from '../components/SpringboardGrid';
 
 const StudentDashboard = ({ tab, setTab }) => {
   const { t } = useLanguage();
@@ -168,12 +169,25 @@ const StudentDashboard = ({ tab, setTab }) => {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in text-sm">
+    <div className="space-y-8 animate-fade-in text-sm pb-10">
       
+      {/* Mobile Back Button for Sub-tabs */}
+      {tab !== 'dashboard' && (
+        <button
+          onClick={() => setTab('dashboard')}
+          className="md:hidden flex items-center space-x-2 text-slate-400 hover:text-white bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl mb-4 font-semibold shadow-md active:scale-95 transition"
+        >
+          <ArrowLeft size={18} />
+          <span>Back to Home</span>
+        </button>
+      )}
+
       {/* Active Tab: Student Dashboard widget */}
       {tab === 'dashboard' && stats && (
         <div className="space-y-8">
           
+          <SpringboardGrid role={user.role} setTab={setTab} />
+
           {/* Summary metrics row */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="glass-panel p-6 rounded-2xl border border-indigo-500/10 flex items-center space-x-4">

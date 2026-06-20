@@ -4,9 +4,10 @@ import { useLanguage } from '../context/LanguageContext';
 import axios from 'axios';
 import { 
   Plus, Edit2, Trash2, ShieldAlert, CheckCircle, 
-  Search, Eye, RefreshCw, UserCheck, Key
+  Search, Eye, RefreshCw, UserCheck, Key, ArrowLeft
 } from 'lucide-react';
 import Settings from './Settings';
+import SpringboardGrid from '../components/SpringboardGrid';
 
 const AdminDashboard = ({ tab, setTab }) => {
   const { t } = useLanguage();
@@ -207,10 +208,23 @@ const AdminDashboard = ({ tab, setTab }) => {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-8 animate-fade-in text-sm pb-10">
+      
+      {/* Mobile Back Button for Sub-tabs */}
+      {tab !== 'dashboard' && (
+        <button
+          onClick={() => setTab('dashboard')}
+          className="md:hidden flex items-center space-x-2 text-slate-400 hover:text-white bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl mb-4 font-semibold shadow-md active:scale-95 transition"
+        >
+          <ArrowLeft size={18} />
+          <span>Back to Home</span>
+        </button>
+      )}
+
       {/* Active Tab: Dashboard Analytics */}
       {tab === 'dashboard' && (
         <>
+          <SpringboardGrid role={user.role} setTab={setTab} />
           {loadingStats ? (
             <div className="flex items-center justify-center py-20 text-indigo-400">
               <RefreshCw className="animate-spin mr-2" /> Loading stats...

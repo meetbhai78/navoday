@@ -18,16 +18,7 @@ import {
   Settings
 } from 'lucide-react';
 
-const Sidebar = ({ role, currentTab, setCurrentTab }) => {
-  const { t } = useLanguage();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate('/login');
-  };
-
+export const getNavigationTabs = (role, t) => {
   const adminTabs = [
     { id: 'dashboard', label: t('dashboard'), icon: LayoutDashboard },
     { id: 'villages', label: t('villages'), icon: MapPin },
@@ -56,7 +47,20 @@ const Sidebar = ({ role, currentTab, setCurrentTab }) => {
     { id: 'settings', label: t('settings'), icon: Settings }
   ];
 
-  const tabs = role === 'Admin' ? adminTabs : role === 'Teacher' ? teacherTabs : studentTabs;
+  return role === 'Admin' ? adminTabs : role === 'Teacher' ? teacherTabs : studentTabs;
+};
+
+const Sidebar = ({ role, currentTab, setCurrentTab }) => {
+  const { t } = useLanguage();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/login');
+  };
+
+  const tabs = getNavigationTabs(role, t);
 
   return (
     <>
@@ -101,42 +105,6 @@ const Sidebar = ({ role, currentTab, setCurrentTab }) => {
           </button>
         </div>
       </aside>
-
-      {/* --- MOBILE BOTTOM NAVIGATION BAR (Hidden on desktop) --- */}
-      <nav className="md:hidden fixed bottom-0 left-0 w-full bg-slate-950/95 backdrop-blur-xl border-t border-slate-800 flex items-center overflow-x-auto no-scrollbar z-50 px-2 py-2 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.5)]">
-        {tabs.map((tab) => {
-          const Icon = tab.icon;
-          const isActive = currentTab === tab.id;
-          return (
-            <button
-              key={tab.id}
-              onClick={() => setCurrentTab(tab.id)}
-              className={`flex-shrink-0 flex flex-col items-center justify-center w-[72px] h-[60px] rounded-xl transition-all duration-200 ${
-                isActive ? 'text-indigo-400' : 'text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              <div className={`p-1.5 rounded-lg mb-0.5 transition-all ${isActive ? 'bg-indigo-600/20 shadow-inner' : ''}`}>
-                <Icon size={20} className={isActive ? 'text-indigo-400' : 'text-slate-400'} />
-              </div>
-              <span className={`text-[9px] font-semibold tracking-wide ${isActive ? 'text-indigo-300' : 'text-slate-500'}`}>
-                {tab.label}
-              </span>
-            </button>
-          );
-        })}
-        
-        {/* Logout Button in Mobile Bottom Nav */}
-        <div className="w-[1px] h-8 bg-slate-800 mx-1 flex-shrink-0"></div>
-        <button
-          onClick={handleLogout}
-          className="flex-shrink-0 flex flex-col items-center justify-center w-[72px] h-[60px] rounded-xl text-rose-500 hover:text-rose-400 transition-all"
-        >
-          <div className="p-1.5 rounded-lg mb-0.5">
-            <LogOut size={20} />
-          </div>
-          <span className="text-[9px] font-semibold tracking-wide text-rose-500/80">{t('logout')}</span>
-        </button>
-      </nav>
     </>
   );
 };
