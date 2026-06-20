@@ -18,12 +18,15 @@ const generateToken = (id) => {
 // @access  Public
 const registerStudent = async (req, res, next) => {
   try {
-    const { username, password, name, email, phone, rollNumber, classId, villageId, guardianName, guardianPhone } = req.body;
+    const { password, name, email, phone, rollNumber, classId, villageId } = req.body;
+
+    // Use the phone number as the username to ensure uniqueness per student
+    const username = phone;
 
     const userExists = await User.findOne({ username });
     if (userExists) {
       res.status(400);
-      throw new Error('Username already exists');
+      throw new Error('This mobile number is already registered.');
     }
 
     // Validate Class and Village
@@ -46,14 +49,12 @@ const registerStudent = async (req, res, next) => {
       status: 'Active'
     });
 
-    // Create Student Profile
+    // Create Student Profile without guardian details
     const studentProfile = await StudentProfile.create({
       userId: user._id,
       rollNumber,
       classId,
-      villageId,
-      guardianName,
-      guardianPhone
+      villageId
     });
 
     await logActivity(user._id, 'REGISTER', `Student registered successfully: ${username}`, req);
@@ -79,7 +80,12 @@ const loginUser = async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
-    const user = await User.findOne({ username });
+    // The 'username' field from frontend will now contain the Mobile Number (or an actual username for admins).
+    // We search the DB for either a matching username OR a matching phone number.
+    const user = await User.findOne({ 
+      $or: [{ username: username }, { phone: username }] 
+    });
+    
     if (user && (await user.matchPassword(password))) {
       if (user.status === 'Inactive') {
         res.status(403);

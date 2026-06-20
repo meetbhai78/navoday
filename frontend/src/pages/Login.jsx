@@ -24,15 +24,12 @@ const Login = () => {
 
   // Register credentials
   const [regName, setRegName] = useState('');
-  const [regUsername, setRegUsername] = useState('');
   const [regPassword, setRegPassword] = useState('');
   const [regEmail, setRegEmail] = useState('');
   const [regPhone, setRegPhone] = useState('');
   const [regRollNumber, setRegRollNumber] = useState('');
   const [regClassId, setRegClassId] = useState('');
   const [regVillageId, setRegVillageId] = useState('');
-  const [regGuardianName, setRegGuardianName] = useState('');
-  const [regGuardianPhone, setRegGuardianPhone] = useState('');
 
   // Villages & Classes lists
   const [villages, setVillages] = useState([]);
@@ -74,27 +71,24 @@ const Login = () => {
   const handleRegisterSubmit = (e) => {
     e.preventDefault();
     if (
-      !regUsername ||
+      !regPhone ||
       !regPassword ||
       !regName ||
       !regClassId ||
       !regVillageId
     ) {
-      return alert('Fill in all required fields');
+      return alert('Fill in all required fields (including Phone Number)');
     }
 
     dispatch(
       registerStudent({
-        username: regUsername,
         password: regPassword,
         name: regName,
         email: regEmail,
         phone: regPhone,
         rollNumber: regRollNumber,
         classId: regClassId,
-        villageId: regVillageId,
-        guardianName: regGuardianName,
-        guardianPhone: regGuardianPhone
+        villageId: regVillageId
       })
     );
   };
@@ -133,13 +127,13 @@ const Login = () => {
           <form onSubmit={handleLoginSubmit} className="space-y-4 sm:space-y-6">
             <div>
               <label className="block text-sm font-semibold text-slate-300 mb-1.5 sm:mb-2">
-                {t('username')}
+                Mobile Number
               </label>
               <input
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter username"
+                placeholder="Enter mobile number"
                 className="w-full bg-slate-900/80 border border-slate-800 hover:border-slate-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 outline-none transition duration-150"
                 required
               />
@@ -196,8 +190,8 @@ const Login = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className={labelClass}>{t('username')} *</label>
-                <input type="text" value={regUsername} onChange={(e) => setRegUsername(e.target.value)} placeholder="Username" className={inputClass} required />
+                <label className={labelClass}>Mobile Number *</label>
+                <input type="text" value={regPhone} onChange={(e) => setRegPhone(e.target.value)} placeholder="Phone number" className={inputClass} required />
               </div>
               <div>
                 <label className={labelClass}>{t('password')} *</label>
@@ -205,21 +199,10 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
               <div>
                 <label className={labelClass}>{t('email')}</label>
                 <input type="email" value={regEmail} onChange={(e) => setRegEmail(e.target.value)} placeholder="email@domain.com" className={inputClass} />
-              </div>
-              <div>
-                <label className={labelClass}>{t('phone')}</label>
-                <input type="text" value={regPhone} onChange={(e) => setRegPhone(e.target.value)} placeholder="Phone number" className={inputClass} />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-              <div>
-                <label className={labelClass}>{t('rollNumber')}</label>
-                <input type="text" value={regRollNumber} onChange={(e) => setRegRollNumber(e.target.value)} placeholder="Roll No" className={inputClass} />
               </div>
               <div>
                 <label className={labelClass}>{t('class')} *</label>
@@ -241,14 +224,10 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1">
               <div>
-                <label className={labelClass}>{t('guardianName')}</label>
-                <input type="text" value={regGuardianName} onChange={(e) => setRegGuardianName(e.target.value)} placeholder="Guardian full name" className={inputClass} />
-              </div>
-              <div>
-                <label className={labelClass}>{t('guardianPhone')}</label>
-                <input type="text" value={regGuardianPhone} onChange={(e) => setRegGuardianPhone(e.target.value)} placeholder="Guardian Phone" className={inputClass} />
+                <label className={labelClass}>{t('rollNumber')}</label>
+                <input type="text" value={regRollNumber} onChange={(e) => setRegRollNumber(e.target.value)} placeholder="Roll No" className={inputClass} />
               </div>
             </div>
 
