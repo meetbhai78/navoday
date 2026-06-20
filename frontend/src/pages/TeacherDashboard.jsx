@@ -6,6 +6,7 @@ import {
   Check, X, Plus, Trash2, Send, FileText, Download, 
   UserCheck, AlertCircle, Eye, Calendar, Upload, Award
 } from 'lucide-react';
+import Settings from './Settings';
 
 const TeacherDashboard = ({ tab, setTab }) => {
   const { t } = useLanguage();
@@ -1044,6 +1045,11 @@ const TeacherDashboard = ({ tab, setTab }) => {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Active Tab: Settings */}
+      {tab === 'settings' && (
+        <Settings />
       )}
 
       {/* POPUP EXAM SCHEDULER MODAL */}

@@ -6,6 +6,7 @@ import {
   Download, Clock, CheckCircle, AlertCircle, FileText, 
   ChevronRight, Award, Bell, Mail, RefreshCw, Send, Check
 } from 'lucide-react';
+import Settings from './Settings';
 
 const StudentDashboard = ({ tab, setTab }) => {
   const { t } = useLanguage();
@@ -615,6 +616,11 @@ const StudentDashboard = ({ tab, setTab }) => {
             </form>
           </div>
         </div>
+      )}
+
+      {/* Active Tab: Settings */}
+      {tab === 'settings' && (
+        <Settings />
       )}
     </div>
   );

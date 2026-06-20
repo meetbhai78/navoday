@@ -6,6 +6,7 @@ import {
   Plus, Edit2, Trash2, ShieldAlert, CheckCircle, 
   Search, Eye, RefreshCw, UserCheck, Key
 } from 'lucide-react';
+import Settings from './Settings';
 
 const AdminDashboard = ({ tab, setTab }) => {
   const { t } = useLanguage();
@@ -652,6 +653,11 @@ const AdminDashboard = ({ tab, setTab }) => {
             </table>
           </div>
         </div>
+      )}
+
+      {/* active tab: Settings */}
+      {tab === 'settings' && (
+        <Settings />
       )}
 
       {/* POPUP FORM MODAL */}

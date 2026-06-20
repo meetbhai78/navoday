@@ -77,7 +77,11 @@ const translations = {
     question: "Question",
     selectedAnswers: "Selected Answers",
     welcome: "Welcome back",
-    score: "Score"
+    score: "Score",
+    settings: "Settings & Password",
+    currentPassword: "Current Password",
+    newPassword: "New Password",
+    passwordChanged: "Password changed successfully"
   },
   gu: {
     appName: "સ્માર્ટ વિદ્યાર્થી સંચાલન અને હાજરી પદ્ધતિ",
@@ -153,7 +157,11 @@ const translations = {
     question: "પ્રશ્ન",
     selectedAnswers: "પસંદ કરેલા જવાબો",
     welcome: "સુસ્વાગતમ",
-    score: "ગુણ"
+    score: "ગુણ",
+    settings: "સેટિંગ્સ અને પાસવર્ડ",
+    currentPassword: "વર્તમાન પાસવર્ડ",
+    newPassword: "નવો પાસવર્ડ",
+    passwordChanged: "પાસવર્ડ સફળતાપૂર્વક બદલાઈ ગયો છે"
   }
 };
 

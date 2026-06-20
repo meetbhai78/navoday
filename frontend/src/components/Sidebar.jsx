@@ -14,7 +14,8 @@ import {
   Mail,
   FileCode,
   LogOut,
-  FolderOpen
+  FolderOpen,
+  Settings
 } from 'lucide-react';
 
 const Sidebar = ({ role, currentTab, setCurrentTab }) => {
@@ -34,7 +35,8 @@ const Sidebar = ({ role, currentTab, setCurrentTab }) => {
     { id: 'classes', label: t('classes'), icon: BookOpen },
     { id: 'teachers', label: t('teachers'), icon: Users },
     { id: 'students', label: t('students'), icon: GraduationCap },
-    { id: 'auditLogs', label: t('auditLogs'), icon: FileCode }
+    { id: 'auditLogs', label: t('auditLogs'), icon: FileCode },
+    { id: 'settings', label: t('settings'), icon: Settings }
   ];
 
   const teacherTabs = [
@@ -42,7 +44,8 @@ const Sidebar = ({ role, currentTab, setCurrentTab }) => {
     { id: 'attendance', label: t('attendance'), icon: CalendarCheck },
     { id: 'exams', label: t('exams'), icon: FileSpreadsheet },
     { id: 'homework', label: t('homework'), icon: FolderOpen },
-    { id: 'messages', label: t('messages'), icon: Mail }
+    { id: 'messages', label: t('messages'), icon: Mail },
+    { id: 'settings', label: t('settings'), icon: Settings }
   ];
 
   const studentTabs = [
@@ -50,7 +53,8 @@ const Sidebar = ({ role, currentTab, setCurrentTab }) => {
     { id: 'attendance', label: t('attendance'), icon: CalendarCheck },
     { id: 'exams', label: t('exams'), icon: FileSpreadsheet },
     { id: 'homework', label: t('homework'), icon: FolderOpen },
-    { id: 'messages', label: t('messages'), icon: Mail }
+    { id: 'messages', label: t('messages'), icon: Mail },
+    { id: 'settings', label: t('settings'), icon: Settings }
   ];
 
   const tabs = role === 'Admin' ? adminTabs : role === 'Teacher' ? teacherTabs : studentTabs;

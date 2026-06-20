@@ -33,10 +33,12 @@ const seedDB = async () => {
     await Homework.deleteMany();
     await Announcement.deleteMany();
 
-    console.log('Seeding Villages...');
-    const v1 = await Village.create({ name: 'Navsari', code: 'NAV01', district: 'Navsari', state: 'Gujarat' });
-    const v2 = await Village.create({ name: 'Dharampur', code: 'DHP01', district: 'Valsad', state: 'Gujarat' });
-    const v3 = await Village.create({ name: 'Bardoli', code: 'BDL01', district: 'Surat', state: 'Gujarat' });
+    console.log('Seeding Botad Villages...');
+    const v1 = await Village.create({ name: 'Botad', code: 'BOT01', district: 'Botad', state: 'Gujarat' });
+    const v2 = await Village.create({ name: 'Gadhada', code: 'GHD01', district: 'Botad', state: 'Gujarat' });
+    const v3 = await Village.create({ name: 'Barwala', code: 'BWL01', district: 'Botad', state: 'Gujarat' });
+    const v4 = await Village.create({ name: 'Ranpur', code: 'RNP01', district: 'Botad', state: 'Gujarat' });
+    const v5 = await Village.create({ name: 'Paliyad', code: 'PLD01', district: 'Botad', state: 'Gujarat' });
 
     console.log('Seeding Classes...');
     const c1 = await Class.create({ name: 'Standard 10', code: 'STD10' });
@@ -45,12 +47,12 @@ const seedDB = async () => {
     console.log('Seeding Users...');
     // 1. Admin
     const admin = await User.create({
-      username: 'admin',
-      password: 'admin123',
+      username: 'meetberani78@gmail.com',
+      password: 'BeMeet@2007',
       role: 'Admin',
-      name: 'System Admin',
-      email: 'admin@navoday.org',
-      phone: '9998887770',
+      name: 'Meet Berani',
+      email: 'meetberani78@gmail.com',
+      phone: '9876543210',
       languagePreference: 'en',
       status: 'Active'
     });
@@ -68,7 +70,7 @@ const seedDB = async () => {
     });
     const tProfile1 = await TeacherProfile.create({
       userId: teacher1._id,
-      villageIds: [v1._id, v2._id],
+      villageIds: [v1._id, v2._id, v5._id],
       specialization: 'Maths and Science'
     });
 
@@ -84,7 +86,7 @@ const seedDB = async () => {
     });
     const tProfile2 = await TeacherProfile.create({
       userId: teacher2._id,
-      villageIds: [v3._id],
+      villageIds: [v3._id, v4._id],
       specialization: 'English and Gujarati'
     });
 
@@ -192,7 +194,7 @@ const seedDB = async () => {
 
     console.log('Seeding Announcements...');
     await Announcement.create({
-      title: 'Welcome to Navoday Smart Attendance System!',
+      title: 'Welcome to Botad Navoday Smart Attendance System!',
       content: 'All teachers are requested to record daily student attendance before 11:00 AM. Students can take online tests and download notes directly from their respective portals.',
       createdBy: admin._id
     });
