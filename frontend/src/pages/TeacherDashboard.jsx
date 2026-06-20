@@ -69,7 +69,7 @@ const TeacherDashboard = ({ tab, setTab }) => {
       setVillages(profRes.data.profile?.villageIds || []);
       
       // Get all classes
-      const clsRes = await axios.get('/api/admin/classes', config); // using public/admin api
+      const clsRes = await axios.get('/api/auth/classes', config); // using public api
       setClasses(clsRes.data);
     } catch (err) {
       console.error(err);
@@ -109,7 +109,7 @@ const TeacherDashboard = ({ tab, setTab }) => {
     setMessages(res.data);
     
     // Also fetch all students for message receiver list
-    const stRes = await axios.get('/api/admin/students', config);
+    const stRes = await axios.get('/api/auth/students', config);
     setAllStudents(stRes.data);
   };
 

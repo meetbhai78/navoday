@@ -235,6 +235,18 @@ const getPublicClasses = async (req, res, next) => {
   }
 };
 
+// @desc    Get all students (helper for teachers/messaging)
+// @route   GET /api/auth/students
+// @access  Private
+const getPublicStudents = async (req, res, next) => {
+  try {
+    const students = await User.find({ role: 'Student' }).select('name username _id');
+    res.json(students);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   registerStudent,
   loginUser,
@@ -242,5 +254,6 @@ module.exports = {
   changeLanguage,
   changePassword,
   getPublicVillages,
-  getPublicClasses
+  getPublicClasses,
+  getPublicStudents
 };
