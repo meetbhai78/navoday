@@ -3,17 +3,17 @@ services:
   - type: web
     name: navoday
     env: node
-    buildCommand: npm install --prefix backend && NODE_ENV=development npm install --prefix frontend && npm run build --prefix frontend
-    startCommand: npm start --prefix backend
+    buildCommand: npm run build
+    startCommand: npm start
     envVars:
       - key: PORT
         value: 5000
       - key: NODE_ENV
         value: production
       - key: MONGO_URI
-        sync: false # User will input Atlas link on Render dashboard
+        sync: false
       - key: JWT_SECRET
-        sync: false # User will input secret on Render dashboard
+        sync: false
       - key: CLOUDINARY_CLOUD_NAME
         value: daulyz7fl
       - key: CLOUDINARY_API_KEY
