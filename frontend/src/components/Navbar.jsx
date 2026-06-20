@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useSelector } from 'react-redux';
-import { Globe, User, Settings, LogOut } from 'lucide-react';
+import { Globe, User, Settings, LogOut, Sun, Moon } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { logout } from '../features/authSlice';
 import { useNavigate } from 'react-router-dom';
@@ -11,6 +11,20 @@ const Navbar = ({ title, setTab }) => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [isLightMode, setIsLightMode] = useState(() => {
+    return localStorage.getItem('theme') === 'light';
+  });
+
+  useEffect(() => {
+    if (isLightMode) {
+      document.body.classList.add('light-theme');
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.body.classList.remove('light-theme');
+      localStorage.setItem('theme', 'dark');
+    }
+  }, [isLightMode]);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -35,6 +49,15 @@ const Navbar = ({ title, setTab }) => {
           <Globe size={14} />
           <span className="hidden sm:inline">{lang === 'en' ? 'ગુજરાતી' : 'English'}</span>
           <span className="sm:hidden">{lang === 'en' ? 'GU' : 'EN'}</span>
+        </button>
+
+        {/* Theme Toggle */}
+        <button
+          onClick={() => setIsLightMode(!isLightMode)}
+          className="p-1.5 sm:p-2 bg-slate-800 hover:bg-slate-700 text-amber-400 rounded-lg border border-slate-700 transition duration-150 shadow-md no-invert"
+          title="Toggle Theme"
+        >
+          {isLightMode ? <Moon size={18} className="text-slate-300" /> : <Sun size={18} />}
         </button>
 
         {/* Quick Actions (Settings & Logout) */}

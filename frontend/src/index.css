@@ -85,3 +85,15 @@
 html, body {
   overflow-x: hidden;
 }
+
+/* Light Mode Toggle via Smart CSS Invert Filter */
+body.light-theme {
+  filter: invert(1) hue-rotate(180deg);
+  background-color: #f8fafc;
+}
+
+body.light-theme img,
+body.light-theme video,
+body.light-theme .no-invert {
+  filter: invert(1) hue-rotate(180deg);
+}
