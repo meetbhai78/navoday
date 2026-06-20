@@ -261,7 +261,17 @@ const StudentDashboard = ({ tab, setTab }) => {
                         <span className="text-2xl font-black text-indigo-400">{res.marksObtained}</span>
                         <span className="text-xs text-slate-500">/ {res.examId?.totalMarks}</span>
                       </div>
-                      <span className={`text-[10px] font-bold uppercase ${res.isPassed ? 'text-emerald-400' : 'text-rose-400'}`}>
+                      <div className="grid grid-cols-2 gap-2 mt-2">
+                        <div className="bg-slate-950 p-2 rounded-lg border border-slate-800">
+                          <p className="text-[10px] text-slate-500 uppercase font-bold">Grade</p>
+                          <p className={`text-sm font-black ${res.grade === 'F' ? 'text-rose-400' : 'text-emerald-400'}`}>{res.grade}</p>
+                        </div>
+                        <div className="bg-slate-950 p-2 rounded-lg border border-slate-800">
+                          <p className="text-[10px] text-slate-500 uppercase font-bold">Village Rank</p>
+                          <p className="text-sm font-black text-amber-400">{res.villageRank} <span className="text-[10px] text-slate-500">/ {res.villageTotal}</span></p>
+                        </div>
+                      </div>
+                      <span className={`text-[10px] font-bold uppercase mt-2 block ${res.isPassed ? 'text-emerald-400' : 'text-rose-400'}`}>
                         {res.isPassed ? 'PASSED' : 'FAILED'}
                       </span>
                     </div>
@@ -461,14 +471,12 @@ const StudentDashboard = ({ tab, setTab }) => {
         </div>
       )}
 
-      {/* Active Tab: Homework Submissions and study library */}
+      {/* Active Tab: Homework Submissions */}
       {tab === 'homework' && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left panel: Homework logs */}
-          <div className="glass-panel p-6 rounded-2xl space-y-6">
-            <h3 className="text-xl font-bold flex items-center"><span className="mr-2">📚</span> Assignments</h3>
-            
-            <div className="space-y-4">
+        <div className="glass-panel p-6 rounded-2xl space-y-6">
+          <h3 className="text-xl font-bold flex items-center"><span className="mr-2">📚</span> Assignments</h3>
+          
+          <div className="space-y-4">
               {homework.length === 0 && <p className="text-slate-500 text-xs">No assignments uploaded.</p>}
               {homework.map((hw) => (
                 <div key={hw._id} className="p-4 bg-slate-900 border border-slate-800 rounded-xl space-y-3">
@@ -525,31 +533,32 @@ const StudentDashboard = ({ tab, setTab }) => {
               ))}
             </div>
           </div>
+      )}
 
-          {/* Right panel: Study notes library */}
-          <div className="glass-panel p-6 rounded-2xl space-y-6">
-            <h3 className="text-xl font-bold flex items-center"><span className="mr-2">📖</span> Study Library</h3>
-            <div className="space-y-3">
-              {materials.length === 0 && <p className="text-slate-500 text-xs">No files available yet.</p>}
-              {materials.map((mat) => (
-                <div key={mat._id} className="p-4 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-between hover:border-indigo-500/20 transition">
-                  <div>
-                    <h4 className="font-bold text-slate-200">{mat.title}</h4>
-                    <p className="text-xs text-slate-500">Subject: {mat.subject} | By: {mat.uploadedBy?.name}</p>
-                  </div>
-                  {mat.fileUrl && (
-                    <a
-                      href={mat.fileUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="bg-slate-800 hover:bg-slate-700 text-indigo-300 text-xs font-bold p-2.5 rounded-xl border border-slate-750 transition"
-                    >
-                      <Download size={14} />
-                    </a>
-                  )}
+      {/* Active Tab: Study Notes Library */}
+      {tab === 'notes' && (
+        <div className="glass-panel p-6 rounded-2xl space-y-6">
+          <h3 className="text-xl font-bold flex items-center"><span className="mr-2">📖</span> Study Library</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {materials.length === 0 && <p className="text-slate-500 text-xs col-span-full">No files available yet.</p>}
+            {materials.map((mat) => (
+              <div key={mat._id} className="p-4 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-between hover:border-indigo-500/20 transition">
+                <div>
+                  <h4 className="font-bold text-slate-200">{mat.title}</h4>
+                  <p className="text-xs text-slate-500">Subject: {mat.subject} | By: {mat.uploadedBy?.name}</p>
                 </div>
-              ))}
-            </div>
+                {mat.fileUrl && (
+                  <a
+                    href={mat.fileUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="bg-slate-800 hover:bg-slate-700 text-indigo-300 text-xs font-bold p-2.5 rounded-xl border border-slate-750 transition"
+                  >
+                    <Download size={14} />
+                  </a>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       )}

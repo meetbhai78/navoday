@@ -98,14 +98,59 @@ const getStudentDashboard = async (req, res, next) => {
       ? Math.round((presentAttendance / totalAttendance) * 100)
       : 100; // default to 100% or 0%? Let's say 100% or N/A
 
-    // Latest marks (published results)
-    const latestResults = await Result.find({ studentId: req.user._id, published: true })
+    const rawLatestResults = await Result.find({ studentId: req.user._id, published: true })
       .populate({
         path: 'examId',
         select: 'title totalMarks passingMarks date'
       })
       .sort({ submittedAt: -1 })
       .limit(3);
+
+    const latestResults = [];
+    for (const resDoc of rawLatestResults) {
+      const resObj = resDoc.toObject();
+      const examIdStr = resObj.examId._id.toString();
+
+      // Find all results for this exam
+      const allResultsForExam = await Result.find({ examId: examIdStr, published: true })
+        .populate('studentId');
+
+      // Filter results for students in the SAME village
+      const villageResults = allResultsForExam.filter(r => {
+        if (!r.studentId) return false;
+        // We need to fetch the student profiles to check village, or we can look up profiles in bulk
+        return true; 
+      });
+      // Wait, this isn't efficient or fully correct without StudentProfile. Let's do it right.
+      
+      const studentProfiles = await StudentProfile.find({ villageId: profile.villageId });
+      const villageStudentIds = studentProfiles.map(p => p.userId.toString());
+
+      const filteredVillageResults = allResultsForExam.filter(r => 
+        r.studentId && villageStudentIds.includes(r.studentId._id.toString())
+      );
+
+      // Sort by marks descending
+      filteredVillageResults.sort((a, b) => b.marksObtained - a.marksObtained);
+
+      // Find rank
+      const rankIndex = filteredVillageResults.findIndex(r => r.studentId._id.toString() === req.user._id.toString());
+      
+      resObj.villageRank = rankIndex !== -1 ? rankIndex + 1 : '-';
+      resObj.villageTotal = filteredVillageResults.length;
+      
+      // Calculate grade
+      const percentage = (resObj.marksObtained / resObj.examId.totalMarks) * 100;
+      let grade = 'F';
+      if (percentage >= 90) grade = 'A+';
+      else if (percentage >= 80) grade = 'A';
+      else if (percentage >= 70) grade = 'B';
+      else if (percentage >= 60) grade = 'C';
+      else if (percentage >= 50) grade = 'D';
+      
+      resObj.grade = grade;
+      latestResults.push(resObj);
+    }
 
     // Upcoming exams
     const today = new Date();

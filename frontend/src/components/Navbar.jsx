@@ -1,17 +1,29 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useSelector } from 'react-redux';
-import { Globe, User, Menu } from 'lucide-react';
+import { Globe, User, Settings, LogOut } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { logout } from '../features/authSlice';
+import { useNavigate } from 'react-router-dom';
 
-const Navbar = ({ title, onMenuClick }) => {
+const Navbar = ({ title, setTab }) => {
   const { toggleLanguage, lang, t } = useLanguage();
   const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/login');
+  };
 
   return (
     <header className="glass-panel border-b border-slate-800 px-4 sm:px-8 py-3 sm:py-4 flex items-center justify-between sticky top-0 z-30">
       <div className="flex items-center space-x-3">
 
-        <h2 className="text-base sm:text-xl font-bold text-slate-100 truncate">{title}</h2>
+        <h2 className="text-base sm:text-xl font-bold text-slate-100 truncate">
+          {user?.role === 'Student' ? user.name : title}
+        </h2>
       </div>
 
       <div className="flex items-center space-x-2 sm:space-x-6">
@@ -24,6 +36,26 @@ const Navbar = ({ title, onMenuClick }) => {
           <span className="hidden sm:inline">{lang === 'en' ? 'ગુજરાતી' : 'English'}</span>
           <span className="sm:hidden">{lang === 'en' ? 'GU' : 'EN'}</span>
         </button>
+
+        {/* Quick Actions (Settings & Logout) */}
+        {user && (
+          <div className="flex items-center space-x-1 sm:space-x-2">
+            <button
+              onClick={() => { if(setTab) setTab('settings') }}
+              className="p-1.5 sm:p-2 text-slate-400 hover:text-indigo-300 hover:bg-slate-800 rounded-lg transition"
+              title={t('settings')}
+            >
+              <Settings size={18} />
+            </button>
+            <button
+              onClick={handleLogout}
+              className="p-1.5 sm:p-2 text-slate-400 hover:text-rose-400 hover:bg-slate-800 rounded-lg transition"
+              title={t('logout')}
+            >
+              <LogOut size={18} />
+            </button>
+          </div>
+        )}
 
         {/* User Info */}
         {user && (

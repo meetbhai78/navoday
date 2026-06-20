@@ -23,7 +23,9 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   // Register credentials
-  const [regName, setRegName] = useState('');
+  const [regSurname, setRegSurname] = useState('');
+  const [regFirstName, setRegFirstName] = useState('');
+  const [regFatherName, setRegFatherName] = useState('');
   const [regPassword, setRegPassword] = useState('');
   const [regEmail, setRegEmail] = useState('');
   const [regPhone, setRegPhone] = useState('');
@@ -73,17 +75,21 @@ const Login = () => {
     if (
       !regPhone ||
       !regPassword ||
-      !regName ||
+      !regSurname ||
+      !regFirstName ||
+      !regFatherName ||
       !regClassId ||
       !regVillageId
     ) {
       return alert('Fill in all required fields (including Phone Number)');
     }
 
+    const fullName = `${regSurname} ${regFirstName} ${regFatherName}`.trim();
+
     dispatch(
       registerStudent({
         password: regPassword,
-        name: regName,
+        name: fullName,
         email: regEmail,
         phone: regPhone,
         rollNumber: regRollNumber,
@@ -183,9 +189,19 @@ const Login = () => {
         ) : (
           /* REGISTRATION FORM */
           <form onSubmit={handleRegisterSubmit} className="space-y-4 max-h-[55vh] sm:max-h-[60vh] overflow-y-auto pr-1 sm:pr-2">
-            <div>
-              <label className={labelClass}>{t('name')} *</label>
-              <input type="text" value={regName} onChange={(e) => setRegName(e.target.value)} placeholder="Enter full name" className={inputClass} required />
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+              <div>
+                <label className={labelClass}>Surname (અટક) *</label>
+                <input type="text" value={regSurname} onChange={(e) => setRegSurname(e.target.value)} placeholder="Surname" className={inputClass} required />
+              </div>
+              <div>
+                <label className={labelClass}>Name (નાम) *</label>
+                <input type="text" value={regFirstName} onChange={(e) => setRegFirstName(e.target.value)} placeholder="Name" className={inputClass} required />
+              </div>
+              <div>
+                <label className={labelClass}>Father's Name (પિતાનું નામ) *</label>
+                <input type="text" value={regFatherName} onChange={(e) => setRegFatherName(e.target.value)} placeholder="Father Name" className={inputClass} required />
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">

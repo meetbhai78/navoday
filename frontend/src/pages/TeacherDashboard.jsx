@@ -636,15 +636,13 @@ const TeacherDashboard = ({ tab, setTab }) => {
         </div>
       )}
 
-      {/* Active Tab: Homework / Study Notes Uploader & Grading */}
+      {/* Active Tab: Homework Manager */}
       {tab === 'homework' && (
         <div className="space-y-8">
           
           {!viewingSubmissionsHw ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Left Column: Homework Manager */}
-              <div className="glass-panel p-6 rounded-2xl space-y-6">
-                <h3 className="text-xl font-bold flex items-center"><span className="mr-2">📚</span> Homework Manager</h3>
+            <div className="glass-panel p-6 rounded-2xl space-y-6">
+              <h3 className="text-xl font-bold flex items-center"><span className="mr-2">📚</span> Homework Manager</h3>
 
                 <form onSubmit={handleCreateHw} className="space-y-4 bg-slate-900/60 p-4 rounded-xl border border-slate-850">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -762,97 +760,6 @@ const TeacherDashboard = ({ tab, setTab }) => {
                   ))}
                 </div>
               </div>
-
-              {/* Right Column: Study Material Manager */}
-              <div className="glass-panel p-6 rounded-2xl space-y-6">
-                <h3 className="text-xl font-bold flex items-center"><span className="mr-2">📄</span> Digital Library Notes</h3>
-
-                <form onSubmit={handleCreateMat} className="space-y-4 bg-slate-900/60 p-4 rounded-xl border border-slate-850">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-400 mb-1">Material Title *</label>
-                      <input
-                        type="text"
-                        value={matFormData.title}
-                        onChange={(e) => setMatFormData({ ...matFormData, title: e.target.value })}
-                        className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs focus:border-indigo-500"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-400 mb-1">Subject *</label>
-                      <input
-                        type="text"
-                        value={matFormData.subject}
-                        onChange={(e) => setMatFormData({ ...matFormData, subject: e.target.value })}
-                        className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs focus:border-indigo-500"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-400 mb-1">Class *</label>
-                    <select
-                      value={matFormData.classId}
-                      onChange={(e) => setMatFormData({ ...matFormData, classId: e.target.value })}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs focus:border-indigo-500"
-                      required
-                    >
-                      <option value="">Select Class</option>
-                      {classes.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-400 mb-1">Upload PDF Document *</label>
-                    <input
-                      type="file"
-                      onChange={(e) => setMatFile(e.target.files[0])}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs focus:border-indigo-500"
-                      required
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg text-xs flex justify-center items-center space-x-1.5 transition shadow"
-                  >
-                    <Upload size={14} /> <span>Upload Study Material</span>
-                  </button>
-                </form>
-
-                {/* Materials List */}
-                <div className="space-y-3">
-                  {materialsList.map((mat) => (
-                    <div key={mat._id} className="p-4 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-between">
-                      <div>
-                        <h4 className="font-bold text-slate-200">{mat.title}</h4>
-                        <p className="text-xs text-slate-500">{mat.subject} | Class: {mat.classId?.name}</p>
-                      </div>
-                      <div className="flex space-x-2">
-                        {mat.fileUrl && (
-                          <a
-                            href={mat.fileUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="p-1.5 text-indigo-400 hover:bg-indigo-950/20 rounded-lg transition"
-                          >
-                            <Download size={15} />
-                          </a>
-                        )}
-                        <button
-                          onClick={() => deleteMat(mat._id)}
-                          className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-rose-950/20 rounded-lg transition"
-                        >
-                          <Trash2 size={15} />
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
           ) : (
             /* SUBMISSIONS VIEW */
             <div className="glass-panel p-6 rounded-2xl space-y-6">
@@ -950,6 +857,97 @@ const TeacherDashboard = ({ tab, setTab }) => {
         </div>
       )}
 
+      {/* Active Tab: Digital Library Notes */}
+      {tab === 'notes' && (
+        <div className="glass-panel p-6 rounded-2xl space-y-6">
+          <h3 className="text-xl font-bold flex items-center"><span className="mr-2">📄</span> Digital Library Notes</h3>
+
+          <form onSubmit={handleCreateMat} className="space-y-4 bg-slate-900/60 p-4 rounded-xl border border-slate-850">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-400 mb-1">Material Title *</label>
+                <input
+                  type="text"
+                  value={matFormData.title}
+                  onChange={(e) => setMatFormData({ ...matFormData, title: e.target.value })}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs focus:border-indigo-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-slate-400 mb-1">Subject *</label>
+                <input
+                  type="text"
+                  value={matFormData.subject}
+                  onChange={(e) => setMatFormData({ ...matFormData, subject: e.target.value })}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs focus:border-indigo-500"
+                  required
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-slate-400 mb-1">Class *</label>
+              <select
+                value={matFormData.classId}
+                onChange={(e) => setMatFormData({ ...matFormData, classId: e.target.value })}
+                className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs focus:border-indigo-500"
+                required
+              >
+                <option value="">Select Class</option>
+                {classes.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-slate-400 mb-1">Upload PDF Document *</label>
+              <input
+                type="file"
+                onChange={(e) => setMatFile(e.target.files[0])}
+                className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs focus:border-indigo-500"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg text-xs flex justify-center items-center space-x-1.5 transition shadow"
+            >
+              <Upload size={14} /> <span>Upload Study Material</span>
+            </button>
+          </form>
+
+          {/* Materials List */}
+          <div className="space-y-3">
+            {materialsList.map((mat) => (
+              <div key={mat._id} className="p-4 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-between">
+                <div>
+                  <h4 className="font-bold text-slate-200">{mat.title}</h4>
+                  <p className="text-xs text-slate-500">{mat.subject} | Class: {mat.classId?.name}</p>
+                </div>
+                <div className="flex space-x-2">
+                  {mat.fileUrl && (
+                    <a
+                      href={mat.fileUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="p-1.5 text-indigo-400 hover:bg-indigo-950/20 rounded-lg transition"
+                    >
+                      <Download size={15} />
+                    </a>
+                  )}
+                  <button
+                    onClick={() => deleteMat(mat._id)}
+                    className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-rose-950/20 rounded-lg transition"
+                  >
+                    <Trash2 size={15} />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       {/* Active Tab: Compose Messages & Notifications */}
       {tab === 'messages' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

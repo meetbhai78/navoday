@@ -47,7 +47,7 @@ const ProtectedLayout = () => {
       <div className="flex-1 flex flex-col min-h-screen overflow-x-hidden w-0">
         <Navbar
           title={user.role + " Portal"}
-          onMenuClick={() => setSidebarOpen(true)}
+          setTab={setCurrentTab}
         />
         <main className="flex-grow p-4 sm:p-6 md:p-8 max-w-7xl mx-auto w-full transition-all duration-300">
           {renderTabContent()}

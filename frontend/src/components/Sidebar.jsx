@@ -15,7 +15,7 @@ import {
   FileCode,
   LogOut,
   FolderOpen,
-  Settings
+  FileText
 } from 'lucide-react';
 
 export const getNavigationTabs = (role, t) => {
@@ -25,8 +25,7 @@ export const getNavigationTabs = (role, t) => {
     { id: 'classes', label: t('classes'), icon: BookOpen },
     { id: 'teachers', label: t('teachers'), icon: Users },
     { id: 'students', label: t('students'), icon: GraduationCap },
-    { id: 'auditLogs', label: t('auditLogs'), icon: FileCode },
-    { id: 'settings', label: t('settings'), icon: Settings }
+    { id: 'auditLogs', label: t('auditLogs'), icon: FileCode }
   ];
 
   const teacherTabs = [
@@ -34,8 +33,8 @@ export const getNavigationTabs = (role, t) => {
     { id: 'attendance', label: t('attendance'), icon: CalendarCheck },
     { id: 'exams', label: t('exams'), icon: FileSpreadsheet },
     { id: 'homework', label: t('homework'), icon: FolderOpen },
-    { id: 'messages', label: t('messages'), icon: Mail },
-    { id: 'settings', label: t('settings'), icon: Settings }
+    { id: 'notes', label: t('notes') || 'Study Notes', icon: FileText },
+    { id: 'messages', label: t('messages'), icon: Mail }
   ];
 
   const studentTabs = [
@@ -43,8 +42,8 @@ export const getNavigationTabs = (role, t) => {
     { id: 'attendance', label: t('attendance'), icon: CalendarCheck },
     { id: 'exams', label: t('exams'), icon: FileSpreadsheet },
     { id: 'homework', label: t('homework'), icon: FolderOpen },
-    { id: 'messages', label: t('messages'), icon: Mail },
-    { id: 'settings', label: t('settings'), icon: Settings }
+    { id: 'notes', label: t('notes') || 'Study Notes', icon: FileText },
+    { id: 'messages', label: t('messages'), icon: Mail }
   ];
 
   return role === 'Admin' ? adminTabs : role === 'Teacher' ? teacherTabs : studentTabs;
