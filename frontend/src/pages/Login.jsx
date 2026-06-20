@@ -99,37 +99,40 @@ const Login = () => {
     );
   };
 
+  const inputClass = "w-full bg-slate-900/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-500 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition duration-150";
+  const labelClass = "block text-xs font-semibold text-slate-300 mb-1";
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-950 px-4 py-12 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-slate-950 px-4 py-8 sm:py-12 relative overflow-hidden">
       {/* Decorative Orbs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40rem] h-[40rem] rounded-full bg-indigo-900/10 blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40rem] h-[40rem] rounded-full bg-emerald-900/10 blur-[120px] pointer-events-none"></div>
+      <div className="absolute top-[-10%] left-[-10%] w-[20rem] sm:w-[40rem] h-[20rem] sm:h-[40rem] rounded-full bg-indigo-900/10 blur-[80px] sm:blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[20rem] sm:w-[40rem] h-[20rem] sm:h-[40rem] rounded-full bg-emerald-900/10 blur-[80px] sm:blur-[120px] pointer-events-none"></div>
 
       {/* Language Switch Button */}
       <button
         onClick={toggleLanguage}
-        className="absolute top-6 right-6 flex items-center space-x-2 bg-slate-900 hover:bg-slate-800 text-indigo-300 font-semibold px-4 py-2 rounded-xl border border-slate-800 transition duration-150 text-sm shadow-md"
+        className="absolute top-4 right-4 sm:top-6 sm:right-6 flex items-center space-x-1.5 sm:space-x-2 bg-slate-900 hover:bg-slate-800 text-indigo-300 font-semibold px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl border border-slate-800 transition duration-150 text-xs sm:text-sm shadow-md z-20"
       >
-        <Globe size={16} />
+        <Globe size={14} />
         <span>{lang === 'en' ? 'ગુજરાતી' : 'English'}</span>
       </button>
 
-      <div className="w-full max-w-xl glass-panel glow-indigo rounded-3xl p-8 md:p-10 shadow-2xl relative z-10">
-        <div className="text-center mb-8">
-          <span className="text-5xl block mb-3">🎓</span>
-          <h2 className="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-300">
+      <div className="w-full max-w-md sm:max-w-xl glass-panel glow-indigo rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-10 shadow-2xl relative z-10">
+        <div className="text-center mb-6 sm:mb-8">
+          <span className="text-4xl sm:text-5xl block mb-2 sm:mb-3">🎓</span>
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-300">
             {t('appName')}
           </h2>
-          <p className="text-slate-400 mt-2 text-sm md:text-base">
+          <p className="text-slate-400 mt-1.5 sm:mt-2 text-xs sm:text-sm md:text-base">
             {isRegister ? t('register') : t('login')}
           </p>
         </div>
 
         {!isRegister ? (
           /* LOGIN FORM */
-          <form onSubmit={handleLoginSubmit} className="space-y-6">
+          <form onSubmit={handleLoginSubmit} className="space-y-4 sm:space-y-6">
             <div>
-              <label className="block text-sm font-semibold text-slate-300 mb-2">
+              <label className="block text-sm font-semibold text-slate-300 mb-1.5 sm:mb-2">
                 {t('username')}
               </label>
               <input
@@ -143,7 +146,7 @@ const Login = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-slate-300 mb-2">
+              <label className="block text-sm font-semibold text-slate-300 mb-1.5 sm:mb-2">
                 {t('password')}
               </label>
               <div className="relative">
@@ -168,12 +171,12 @@ const Login = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 px-4 rounded-xl transition duration-150 shadow-lg shadow-indigo-600/20 active:scale-[0.98] disabled:opacity-50"
+              className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 sm:py-3.5 px-4 rounded-xl transition duration-150 shadow-lg shadow-indigo-600/20 active:scale-[0.98] disabled:opacity-50"
             >
               {isLoading ? 'Loading...' : t('login')}
             </button>
 
-            <div className="text-center pt-2">
+            <div className="text-center pt-1 sm:pt-2">
               <button
                 type="button"
                 onClick={() => setIsRegister(true)}
@@ -185,164 +188,79 @@ const Login = () => {
           </form>
         ) : (
           /* REGISTRATION FORM */
-          <form onSubmit={handleRegisterSubmit} className="space-y-5 max-h-[60vh] overflow-y-auto pr-2">
+          <form onSubmit={handleRegisterSubmit} className="space-y-4 max-h-[55vh] sm:max-h-[60vh] overflow-y-auto pr-1 sm:pr-2">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">
-                {t('name')} *
-              </label>
-              <input
-                type="text"
-                value={regName}
-                onChange={(e) => setRegName(e.target.value)}
-                placeholder="Enter full name"
-                className="w-full bg-slate-900/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-500 outline-none focus:border-indigo-500"
-                required
-              />
+              <label className={labelClass}>{t('name')} *</label>
+              <input type="text" value={regName} onChange={(e) => setRegName(e.target.value)} placeholder="Enter full name" className={inputClass} required />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  {t('username')} *
-                </label>
-                <input
-                  type="text"
-                  value={regUsername}
-                  onChange={(e) => setRegUsername(e.target.value)}
-                  placeholder="Username"
-                  className="w-full bg-slate-900/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-500 outline-none focus:border-indigo-500"
-                  required
-                />
+                <label className={labelClass}>{t('username')} *</label>
+                <input type="text" value={regUsername} onChange={(e) => setRegUsername(e.target.value)} placeholder="Username" className={inputClass} required />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  {t('password')} *
-                </label>
-                <input
-                  type="password"
-                  value={regPassword}
-                  onChange={(e) => setRegPassword(e.target.value)}
-                  placeholder="Password"
-                  className="w-full bg-slate-900/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-500 outline-none focus:border-indigo-500"
-                  required
-                />
+                <label className={labelClass}>{t('password')} *</label>
+                <input type="password" value={regPassword} onChange={(e) => setRegPassword(e.target.value)} placeholder="Password" className={inputClass} required />
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  {t('email')}
-                </label>
-                <input
-                  type="email"
-                  value={regEmail}
-                  onChange={(e) => setRegEmail(e.target.value)}
-                  placeholder="email@domain.com"
-                  className="w-full bg-slate-900/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-500 outline-none focus:border-indigo-500"
-                />
+                <label className={labelClass}>{t('email')}</label>
+                <input type="email" value={regEmail} onChange={(e) => setRegEmail(e.target.value)} placeholder="email@domain.com" className={inputClass} />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  {t('phone')}
-                </label>
-                <input
-                  type="text"
-                  value={regPhone}
-                  onChange={(e) => setRegPhone(e.target.value)}
-                  placeholder="Phone number"
-                  className="w-full bg-slate-900/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-500 outline-none focus:border-indigo-500"
-                />
+                <label className={labelClass}>{t('phone')}</label>
+                <input type="text" value={regPhone} onChange={(e) => setRegPhone(e.target.value)} placeholder="Phone number" className={inputClass} />
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  {t('rollNumber')}
-                </label>
-                <input
-                  type="text"
-                  value={regRollNumber}
-                  onChange={(e) => setRegRollNumber(e.target.value)}
-                  placeholder="Roll No"
-                  className="w-full bg-slate-900/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-500 outline-none focus:border-indigo-500"
-                />
+                <label className={labelClass}>{t('rollNumber')}</label>
+                <input type="text" value={regRollNumber} onChange={(e) => setRegRollNumber(e.target.value)} placeholder="Roll No" className={inputClass} />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  {t('class')} *
-                </label>
-                <select
-                  value={regClassId}
-                  onChange={(e) => setRegClassId(e.target.value)}
-                  className="w-full bg-slate-900/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-300 outline-none focus:border-indigo-500"
-                  required
-                >
+                <label className={labelClass}>{t('class')} *</label>
+                <select value={regClassId} onChange={(e) => setRegClassId(e.target.value)} className={inputClass} required>
                   <option value="">Select</option>
                   {classes.map((c) => (
-                    <option key={c._id} value={c._id}>
-                      {c.name}
-                    </option>
+                    <option key={c._id} value={c._id}>{c.name}</option>
                   ))}
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  {t('village')} *
-                </label>
-                <select
-                  value={regVillageId}
-                  onChange={(e) => setRegVillageId(e.target.value)}
-                  className="w-full bg-slate-900/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-300 outline-none focus:border-indigo-500"
-                  required
-                >
+                <label className={labelClass}>{t('village')} *</label>
+                <select value={regVillageId} onChange={(e) => setRegVillageId(e.target.value)} className={inputClass} required>
                   <option value="">Select</option>
                   {villages.map((v) => (
-                    <option key={v._id} value={v._id}>
-                      {v.name}
-                    </option>
+                    <option key={v._id} value={v._id}>{v.name}</option>
                   ))}
                 </select>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  {t('guardianName')}
-                </label>
-                <input
-                  type="text"
-                  value={regGuardianName}
-                  onChange={(e) => setRegGuardianName(e.target.value)}
-                  placeholder="Guardian full name"
-                  className="w-full bg-slate-900/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-500 outline-none focus:border-indigo-500"
-                />
+                <label className={labelClass}>{t('guardianName')}</label>
+                <input type="text" value={regGuardianName} onChange={(e) => setRegGuardianName(e.target.value)} placeholder="Guardian full name" className={inputClass} />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  {t('guardianPhone')}
-                </label>
-                <input
-                  type="text"
-                  value={regGuardianPhone}
-                  onChange={(e) => setRegGuardianPhone(e.target.value)}
-                  placeholder="Guardian Phone"
-                  className="w-full bg-slate-900/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-500 outline-none focus:border-indigo-500"
-                />
+                <label className={labelClass}>{t('guardianPhone')}</label>
+                <input type="text" value={regGuardianPhone} onChange={(e) => setRegGuardianPhone(e.target.value)} placeholder="Guardian Phone" className={inputClass} />
               </div>
             </div>
 
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 px-4 rounded-xl transition duration-150 shadow-lg shadow-indigo-600/20 active:scale-[0.98] disabled:opacity-50 mt-2"
+              className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 sm:py-3.5 px-4 rounded-xl transition duration-150 shadow-lg shadow-indigo-600/20 active:scale-[0.98] disabled:opacity-50 mt-2"
             >
               {isLoading ? 'Creating...' : t('register')}
             </button>
 
-            <div className="text-center pt-2">
+            <div className="text-center pt-1 sm:pt-2">
               <button
                 type="button"
                 onClick={() => setIsRegister(false)}

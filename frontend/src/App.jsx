@@ -15,6 +15,7 @@ import StudentDashboard from './pages/StudentDashboard';
 const ProtectedLayout = () => {
   const { user } = useSelector((state) => state.auth);
   const [currentTab, setCurrentTab] = useState('dashboard');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   if (!user) {
     return <Navigate to="/login" replace />;
@@ -36,10 +37,19 @@ const ProtectedLayout = () => {
 
   return (
     <div className="flex bg-slate-950 min-h-screen text-slate-100">
-      <Sidebar role={user.role} currentTab={currentTab} setCurrentTab={setCurrentTab} />
-      <div className="flex-1 flex flex-col min-h-screen overflow-x-hidden">
-        <Navbar title={user.role + " Portal"} />
-        <main className="flex-grow p-8 max-w-7xl mx-auto w-full transition-all duration-300">
+      <Sidebar
+        role={user.role}
+        currentTab={currentTab}
+        setCurrentTab={setCurrentTab}
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
+      <div className="flex-1 flex flex-col min-h-screen overflow-x-hidden w-0">
+        <Navbar
+          title={user.role + " Portal"}
+          onMenuClick={() => setSidebarOpen(true)}
+        />
+        <main className="flex-grow p-4 sm:p-6 md:p-8 max-w-7xl mx-auto w-full transition-all duration-300">
           {renderTabContent()}
         </main>
       </div>

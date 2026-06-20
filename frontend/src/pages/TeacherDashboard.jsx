@@ -634,7 +634,7 @@ const TeacherDashboard = ({ tab, setTab }) => {
                 <h3 className="text-xl font-bold flex items-center"><span className="mr-2">📚</span> Homework Manager</h3>
 
                 <form onSubmit={handleCreateHw} className="space-y-4 bg-slate-900/60 p-4 rounded-xl border border-slate-850">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-semibold text-slate-400 mb-1">Homework Title *</label>
                       <input
@@ -755,7 +755,7 @@ const TeacherDashboard = ({ tab, setTab }) => {
                 <h3 className="text-xl font-bold flex items-center"><span className="mr-2">📄</span> Digital Library Notes</h3>
 
                 <form onSubmit={handleCreateMat} className="space-y-4 bg-slate-900/60 p-4 rounded-xl border border-slate-850">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-semibold text-slate-400 mb-1">Material Title *</label>
                       <input
@@ -1062,7 +1062,7 @@ const TeacherDashboard = ({ tab, setTab }) => {
             </div>
 
             <form onSubmit={handleCreateExamSubmit} className="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-slate-400 mb-1">Exam Title *</label>
                   <input
@@ -1195,7 +1195,7 @@ const TeacherDashboard = ({ tab, setTab }) => {
                       />
                     ))}
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-semibold text-slate-400 mb-1">Correct Option (1-4)</label>
                       <select

@@ -694,7 +694,7 @@ const AdminDashboard = ({ tab, setTab }) => {
                       required
                     />
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-semibold text-slate-400 mb-1">District</label>
                       <input
@@ -744,7 +744,7 @@ const AdminDashboard = ({ tab, setTab }) => {
 
               {modalType === 'teacher' && (
                 <>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-semibold text-slate-400 mb-1">Username *</label>
                       <input
@@ -781,7 +781,7 @@ const AdminDashboard = ({ tab, setTab }) => {
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-semibold text-slate-400 mb-1">Email</label>
                       <input
@@ -802,7 +802,7 @@ const AdminDashboard = ({ tab, setTab }) => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-semibold text-slate-400 mb-1">Specialization</label>
                       <input
@@ -846,7 +846,7 @@ const AdminDashboard = ({ tab, setTab }) => {
 
               {modalType === 'student' && (
                 <>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-semibold text-slate-400 mb-1">Username *</label>
                       <input
@@ -919,7 +919,7 @@ const AdminDashboard = ({ tab, setTab }) => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-semibold text-slate-400 mb-1">Email</label>
                       <input
@@ -940,7 +940,7 @@ const AdminDashboard = ({ tab, setTab }) => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-semibold text-slate-400 mb-1">Guardian Name</label>
                       <input
