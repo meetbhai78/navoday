@@ -103,30 +103,56 @@ const Login = () => {
   const labelClass = "block text-xs font-semibold text-slate-300 mb-1";
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-950 px-4 py-8 sm:py-12 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col md:flex-row bg-slate-950 relative overflow-hidden">
       {/* Decorative Orbs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[20rem] sm:w-[40rem] h-[20rem] sm:h-[40rem] rounded-full bg-indigo-900/10 blur-[80px] sm:blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-[20rem] sm:w-[40rem] h-[20rem] sm:h-[40rem] rounded-full bg-emerald-900/10 blur-[80px] sm:blur-[120px] pointer-events-none"></div>
+      <div className="absolute top-[-10%] left-[-10%] w-[20rem] sm:w-[40rem] h-[20rem] sm:h-[40rem] rounded-full bg-indigo-900/10 blur-[80px] sm:blur-[120px] pointer-events-none z-0"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[20rem] sm:w-[40rem] h-[20rem] sm:h-[40rem] rounded-full bg-emerald-900/10 blur-[80px] sm:blur-[120px] pointer-events-none z-0"></div>
 
-      {/* Language Switch Button */}
-      <button
-        onClick={toggleLanguage}
-        className="absolute top-4 right-4 sm:top-6 sm:right-6 flex items-center space-x-1.5 sm:space-x-2 bg-slate-900 hover:bg-slate-800 text-indigo-300 font-semibold px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl border border-slate-800 transition duration-150 text-xs sm:text-sm shadow-md z-20"
-      >
-        <Globe size={14} />
-        <span>{lang === 'en' ? 'ગુજરાતી' : 'English'}</span>
-      </button>
-
-      <div className="w-full max-w-md sm:max-w-xl glass-panel glow-indigo rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-10 shadow-2xl relative z-10">
-        <div className="text-center mb-6 sm:mb-8">
-          <span className="text-4xl sm:text-5xl block mb-2 sm:mb-3">🎓</span>
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-300">
-            {t('appName')}
-          </h2>
-          <p className="text-slate-400 mt-1.5 sm:mt-2 text-xs sm:text-sm md:text-base">
-            {isRegister ? t('register') : t('login')}
-          </p>
+      {/* Left side: AI Background Image */}
+      <div className="hidden md:block md:w-1/2 relative bg-slate-900 overflow-hidden shadow-2xl z-10 border-r border-slate-800">
+        <img 
+          src="/login-bg.png" 
+          alt="Navoday Education" 
+          className="absolute inset-0 w-full h-full object-cover opacity-90"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
+        <div className="absolute bottom-12 left-12 right-12 bg-slate-950/60 backdrop-blur-md p-6 rounded-2xl border border-slate-800/50">
+          <h1 className="text-3xl font-extrabold text-white mb-2 drop-shadow-lg">Welcome to Navoday</h1>
+          <p className="text-slate-300 text-sm drop-shadow-md leading-relaxed">Empowering rural education with modern tools, inspiring the next generation of bright minds.</p>
         </div>
+      </div>
+
+      {/* Right side: Login Form */}
+      <div className="w-full md:w-1/2 flex items-center justify-center p-4 sm:p-12 z-10 relative">
+        {/* Mobile Header Image */}
+        <div className="absolute top-0 left-0 right-0 h-48 md:hidden -z-10">
+          <img 
+            src="/login-bg.png" 
+            alt="Navoday Education" 
+            className="w-full h-full object-cover opacity-40"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-950"></div>
+        </div>
+
+        {/* Language Switch Button */}
+        <button
+          onClick={toggleLanguage}
+          className="absolute top-4 right-4 sm:top-6 sm:right-6 flex items-center space-x-1.5 sm:space-x-2 bg-slate-900/80 hover:bg-slate-800 text-indigo-300 font-semibold px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl border border-slate-800 transition duration-150 text-xs sm:text-sm shadow-md backdrop-blur-sm z-20"
+        >
+          <Globe size={14} />
+          <span>{lang === 'en' ? 'ગુજરાતી' : 'English'}</span>
+        </button>
+
+        <div className="w-full max-w-md glass-panel glow-indigo rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl mt-12 md:mt-0 relative z-10 bg-slate-950/90 md:bg-slate-900/60">
+          <div className="text-center mb-6 sm:mb-8 flex flex-col items-center">
+            <img src="/logo.png" alt="Navoday Logo" className="h-20 w-20 mb-4 object-contain rounded-2xl shadow-[0_0_15px_rgba(99,102,241,0.5)] border border-slate-700 no-invert" />
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-300 tracking-tight">
+              Navoday
+            </h2>
+            <p className="text-slate-400 mt-2 text-xs sm:text-sm font-medium uppercase tracking-widest">
+              {isRegister ? t('register') : t('login')}
+            </p>
+          </div>
 
         {!isRegister ? (
           /* LOGIN FORM */
@@ -266,6 +292,7 @@ const Login = () => {
             </div>
           </form>
         )}
+      </div>
       </div>
     </div>
   );

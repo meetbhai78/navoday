@@ -34,7 +34,7 @@ const Navbar = ({ title, setTab }) => {
   return (
     <header className="glass-panel border-b border-slate-800 px-4 sm:px-8 py-3 sm:py-4 flex items-center justify-between sticky top-0 z-30">
       <div className="flex items-center space-x-3">
-
+        <img src="/logo.png" alt="Navoday" className="h-8 w-8 sm:h-10 sm:w-10 object-contain rounded-lg shadow-md border border-slate-700 no-invert" />
         <h2 className="text-base sm:text-xl font-bold text-slate-100 truncate">
           {user?.role === 'Student' ? user.name : title}
         </h2>
