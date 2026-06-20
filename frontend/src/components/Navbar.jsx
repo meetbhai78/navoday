@@ -10,13 +10,7 @@ const Navbar = ({ title, onMenuClick }) => {
   return (
     <header className="glass-panel border-b border-slate-800 px-4 sm:px-8 py-3 sm:py-4 flex items-center justify-between sticky top-0 z-30">
       <div className="flex items-center space-x-3">
-        {/* Hamburger menu for mobile */}
-        <button
-          onClick={onMenuClick}
-          className="md:hidden text-slate-300 hover:text-white p-1.5 rounded-lg hover:bg-slate-800 transition"
-        >
-          <Menu size={22} />
-        </button>
+
         <h2 className="text-base sm:text-xl font-bold text-slate-100 truncate">{title}</h2>
       </div>
 

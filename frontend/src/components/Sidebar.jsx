@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useDispatch } from 'react-redux';
 import { logout } from '../features/authSlice';
@@ -15,11 +15,10 @@ import {
   FileCode,
   LogOut,
   FolderOpen,
-  Settings,
-  X
+  Settings
 } from 'lucide-react';
 
-const Sidebar = ({ role, currentTab, setCurrentTab, isOpen, onClose }) => {
+const Sidebar = ({ role, currentTab, setCurrentTab }) => {
   const { t } = useLanguage();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,12 +28,6 @@ const Sidebar = ({ role, currentTab, setCurrentTab, isOpen, onClose }) => {
     navigate('/login');
   };
 
-  const handleTabClick = (tabId) => {
-    setCurrentTab(tabId);
-    if (onClose) onClose(); // Close sidebar on mobile after selecting
-  };
-
-  // Define tabs per role
   const adminTabs = [
     { id: 'dashboard', label: t('dashboard'), icon: LayoutDashboard },
     { id: 'villages', label: t('villages'), icon: MapPin },
@@ -67,52 +60,25 @@ const Sidebar = ({ role, currentTab, setCurrentTab, isOpen, onClose }) => {
 
   return (
     <>
-      {/* Mobile overlay backdrop */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/60 z-40 md:hidden"
-          onClick={onClose}
-        />
-      )}
-
-      {/* Sidebar */}
-      <aside
-        className={`
-          glass-panel flex flex-col z-50 transition-all duration-300 ease-in-out
-          ${isOpen 
-            ? 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90vw] sm:w-80 h-auto max-h-[85vh] rounded-3xl border border-slate-700 opacity-100 scale-100' 
-            : 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90vw] sm:w-80 h-auto max-h-[85vh] rounded-3xl border border-slate-700 opacity-0 scale-90 pointer-events-none'
-          }
-          md:static md:transform-none md:w-64 md:h-full md:max-h-full md:rounded-none md:border-t-0 md:border-b-0 md:border-l-0 md:border-r md:border-slate-800 md:opacity-100 md:scale-100 md:pointer-events-auto
-        `}
-      >
-        {/* Brand + Close button for mobile */}
-        <div className="p-4 sm:p-6 border-b border-slate-800 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <span className="text-2xl sm:text-3xl">🎓</span>
-            <div>
-              <h1 className="font-bold text-base sm:text-lg text-indigo-400 tracking-wide">Navoday</h1>
-              <p className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-widest font-semibold">{role}</p>
-            </div>
+      {/* --- DESKTOP SIDEBAR (Hidden on mobile) --- */}
+      <aside className="hidden md:flex flex-col w-64 h-full border-r border-slate-800 glass-panel z-10 sticky top-0">
+        <div className="p-6 border-b border-slate-800 flex items-center space-x-3">
+          <span className="text-3xl">🎓</span>
+          <div>
+            <h1 className="font-bold text-lg text-indigo-400 tracking-wide">Navoday</h1>
+            <p className="text-xs text-slate-400 uppercase tracking-widest font-semibold">{role}</p>
           </div>
-          <button
-            onClick={onClose}
-            className="md:hidden text-slate-400 hover:text-white p-1"
-          >
-            <X size={20} />
-          </button>
         </div>
 
-        {/* Navigation */}
-        <nav className="flex-1 p-3 sm:p-4 space-y-1 overflow-y-auto">
+        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = currentTab === tab.id;
             return (
               <button
                 key={tab.id}
-                onClick={() => handleTabClick(tab.id)}
-                className={`w-full flex items-center space-x-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                onClick={() => setCurrentTab(tab.id)}
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                   isActive
                     ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 font-semibold'
                     : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-100'
@@ -125,17 +91,52 @@ const Sidebar = ({ role, currentTab, setCurrentTab, isOpen, onClose }) => {
           })}
         </nav>
 
-        {/* Logout */}
-        <div className="p-3 sm:p-4 border-t border-slate-800">
+        <div className="p-4 border-t border-slate-800">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center space-x-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl text-sm font-medium text-rose-400 hover:bg-rose-950/40 hover:text-rose-300 transition-all duration-200"
+            className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-rose-400 hover:bg-rose-950/40 hover:text-rose-300 transition-all duration-200"
           >
             <LogOut size={18} />
             <span>{t('logout')}</span>
           </button>
         </div>
       </aside>
+
+      {/* --- MOBILE BOTTOM NAVIGATION BAR (Hidden on desktop) --- */}
+      <nav className="md:hidden fixed bottom-0 left-0 w-full bg-slate-950/95 backdrop-blur-xl border-t border-slate-800 flex items-center overflow-x-auto no-scrollbar z-50 px-2 py-2 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.5)]">
+        {tabs.map((tab) => {
+          const Icon = tab.icon;
+          const isActive = currentTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setCurrentTab(tab.id)}
+              className={`flex-shrink-0 flex flex-col items-center justify-center w-[72px] h-[60px] rounded-xl transition-all duration-200 ${
+                isActive ? 'text-indigo-400' : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              <div className={`p-1.5 rounded-lg mb-0.5 transition-all ${isActive ? 'bg-indigo-600/20 shadow-inner' : ''}`}>
+                <Icon size={20} className={isActive ? 'text-indigo-400' : 'text-slate-400'} />
+              </div>
+              <span className={`text-[9px] font-semibold tracking-wide ${isActive ? 'text-indigo-300' : 'text-slate-500'}`}>
+                {tab.label}
+              </span>
+            </button>
+          );
+        })}
+        
+        {/* Logout Button in Mobile Bottom Nav */}
+        <div className="w-[1px] h-8 bg-slate-800 mx-1 flex-shrink-0"></div>
+        <button
+          onClick={handleLogout}
+          className="flex-shrink-0 flex flex-col items-center justify-center w-[72px] h-[60px] rounded-xl text-rose-500 hover:text-rose-400 transition-all"
+        >
+          <div className="p-1.5 rounded-lg mb-0.5">
+            <LogOut size={20} />
+          </div>
+          <span className="text-[9px] font-semibold tracking-wide text-rose-500/80">{t('logout')}</span>
+        </button>
+      </nav>
     </>
   );
 };
