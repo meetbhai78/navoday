@@ -1,0 +1,8 @@
+{
+  "appId": "com.navoday.app",
+  "appName": "Navoday",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}
