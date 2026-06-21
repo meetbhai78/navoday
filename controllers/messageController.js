@@ -4,6 +4,7 @@ const StudentProfile = require('../models/StudentProfile');
 const TeacherProfile = require('../models/TeacherProfile');
 const User = require('../models/User');
 const { logActivity } = require('../middleware/logger');
+const { sendPushToUsers, sendPushToAllStudents, sendPushToVillageStudents } = require('./notificationController');
 
 // Access validation helper
 const hasVillageAccess = async (user, villageId) => {
@@ -67,6 +68,26 @@ const sendMessage = async (req, res, next) => {
     });
 
     await logActivity(req.user._id, 'SEND_MESSAGE', `Sent ${scope} message`, req);
+
+    // ===== PUSH NOTIFICATIONS =====
+    const senderName = req.user.name || 'Navoday';
+    const shortContent = content.length > 80 ? content.substring(0, 80) + '...' : content;
+    const notifPayload = {
+      title: `📩 ${senderName} નો Message`,
+      body: shortContent,
+      url: '/?tab=messages',
+      tag: 'new-message'
+    };
+
+    if (scope === 'Global') {
+      // Send to all students asynchronously (don't wait)
+      sendPushToAllStudents(notifPayload).catch(console.error);
+    } else if (scope === 'Village' && villageId) {
+      sendPushToVillageStudents(villageId, notifPayload).catch(console.error);
+    } else if (scope === 'Individual' && receiverId) {
+      sendPushToUsers([receiverId], notifPayload).catch(console.error);
+    }
+    // ===== END PUSH NOTIFICATIONS =====
 
     res.status(201).json(message);
   } catch (error) {
@@ -161,6 +182,15 @@ const createAnnouncement = async (req, res, next) => {
     });
 
     await logActivity(req.user._id, 'CREATE_ANNOUNCEMENT', `Created announcement: ${title}`, req);
+
+    // ===== PUSH NOTIFICATIONS - Broadcast to all students =====
+    sendPushToAllStudents({
+      title: `📢 નવી Announcement: ${title}`,
+      body: content.length > 80 ? content.substring(0, 80) + '...' : content,
+      url: '/?tab=dashboard',
+      tag: 'announcement'
+    }).catch(console.error);
+    // ===== END PUSH NOTIFICATIONS =====
 
     res.status(201).json(announcement);
   } catch (error) {

@@ -114,7 +114,10 @@ const Login = () => {
           src="/login-bg.png" 
           alt="Navoday Education" 
           className="absolute inset-0 w-full h-full object-cover opacity-90"
+          onError={(e) => { e.target.style.display = 'none'; }}
         />
+        {/* Fallback gradient background if image fails */}
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
         <div className="absolute bottom-12 left-12 right-12 bg-slate-950/60 backdrop-blur-md p-6 rounded-2xl border border-slate-800/50">
           <h1 className="text-3xl font-extrabold text-white mb-2 drop-shadow-lg">Welcome to Navoday</h1>
@@ -126,10 +129,12 @@ const Login = () => {
       <div className="w-full md:w-1/2 flex items-center justify-center p-4 sm:p-12 z-10 relative">
         {/* Mobile Header Image */}
         <div className="absolute top-0 left-0 right-0 h-48 md:hidden -z-10">
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950" />
           <img 
             src="/login-bg.png" 
             alt="Navoday Education" 
-            className="w-full h-full object-cover opacity-40"
+            className="w-full h-full object-cover opacity-40 relative"
+            onError={(e) => { e.target.style.display = 'none'; }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-950"></div>
         </div>
@@ -145,7 +150,12 @@ const Login = () => {
 
         <div className="w-full max-w-md glass-panel glow-indigo rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl mt-12 md:mt-0 relative z-10 bg-slate-950/90 md:bg-slate-900/60">
           <div className="text-center mb-6 sm:mb-8 flex flex-col items-center">
-            <img src="/logo.png" alt="Navoday Logo" className="h-20 w-20 mb-4 object-contain rounded-2xl shadow-[0_0_15px_rgba(99,102,241,0.5)] border border-slate-700 no-invert" />
+            <img 
+              src="/logo.png" 
+              alt="Navoday Logo" 
+              className="h-20 w-20 mb-4 object-contain rounded-2xl shadow-[0_0_15px_rgba(99,102,241,0.5)] border border-slate-700 no-invert"
+              onError={(e) => { e.target.outerHTML = '<div class="h-20 w-20 mb-4 rounded-2xl bg-indigo-600/30 border border-indigo-500/50 flex items-center justify-center text-4xl shadow-[0_0_15px_rgba(99,102,241,0.5)]">🎓</div>'; }}
+            />
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-300 tracking-tight">
               Navoday
             </h2>

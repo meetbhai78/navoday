@@ -32,6 +32,7 @@ app.use('/api/exams', require('./routes/examRoutes'));
 app.use('/api/homework', require('./routes/homeworkRoutes'));
 app.use('/api/messages', require('./routes/messageRoutes'));
 app.use('/api/dashboard', require('./routes/dashboardRoutes'));
+app.use('/api/notifications', require('./routes/notificationRoutes'));
 
 // Catch-all route to serve the React app's index.html (supports SPA routing)
 app.get('*', (req, res) => {

@@ -4,6 +4,7 @@ const StudentProfile = require('../models/StudentProfile');
 const TeacherProfile = require('../models/TeacherProfile');
 const User = require('../models/User');
 const { logActivity } = require('../middleware/logger');
+const { sendPushToUsers } = require('./notificationController');
 
 // Access validation helper
 const hasVillageAccess = async (user, villageId) => {
@@ -302,6 +303,19 @@ const publishResults = async (req, res, next) => {
     await Result.updateMany({ examId: exam._id }, { published: true });
 
     await logActivity(req.user._id, 'PUBLISH_RESULTS', `Published results for: ${exam.title}`, req);
+
+    // ===== PUSH NOTIFICATIONS - Notify students whose results are published =====
+    const publishedResults = await Result.find({ examId: exam._id }).select('studentId');
+    const studentIds = publishedResults.map(r => r.studentId);
+    if (studentIds.length > 0) {
+      sendPushToUsers(studentIds, {
+        title: `🏆 Result જાહેર થયેલ છે!`,
+        body: `${exam.title} નું Result જુઓ - આદે Result Check કરો!`,
+        url: '/?tab=exams',
+        tag: 'result-published'
+      }).catch(console.error);
+    }
+    // ===== END PUSH NOTIFICATIONS =====
 
     res.json({ message: 'Results published successfully' });
   } catch (error) {

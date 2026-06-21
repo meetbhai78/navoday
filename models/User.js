@@ -10,6 +10,14 @@ const userSchema = new mongoose.Schema({
   phone: { type: String },
   languagePreference: { type: String, enum: ['en', 'gu'], default: 'gu' },
   status: { type: String, enum: ['Active', 'Inactive'], default: 'Active' },
+  // Web Push Notification subscriptions (one per device/browser)
+  pushSubscriptions: [{
+    endpoint: { type: String },
+    keys: {
+      p256dh: { type: String },
+      auth: { type: String }
+    }
+  }],
   createdAt: { type: Date, default: Date.now }
 });
 
