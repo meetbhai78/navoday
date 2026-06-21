@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import Settings from './Settings';
 import SpringboardGrid from '../components/SpringboardGrid';
+import StartIoAd from '../components/StartIoAd';
 
 const StudentDashboard = ({ tab, setTab }) => {
   const { t } = useLanguage();
@@ -188,6 +189,9 @@ const StudentDashboard = ({ tab, setTab }) => {
           
           <SpringboardGrid role={user.role} setTab={setTab} />
 
+          {/* Start.io Banner Ad 1 */}
+          <StartIoAd type="banner" className="my-2" />
+
           {/* Summary metrics row */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="glass-panel p-6 rounded-2xl border border-indigo-500/10 flex items-center space-x-4">
@@ -278,6 +282,9 @@ const StudentDashboard = ({ tab, setTab }) => {
                   ))}
                 </div>
               </div>
+
+              {/* Start.io Video Ad */}
+              <StartIoAd type="video" className="mt-8" />
             </div>
 
             {/* Right column: Announcements board */}
@@ -297,6 +304,9 @@ const StudentDashboard = ({ tab, setTab }) => {
               </div>
             </div>
           </div>
+
+          {/* Start.io Banner Ad 2 */}
+          <StartIoAd type="banner" className="mt-8 mb-4" />
         </div>
       )}
 
